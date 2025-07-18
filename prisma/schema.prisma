@@ -20,7 +20,7 @@ model User {
   lastName String
   dni Int @unique
   edad Int
-  number String @unique
+  number String 
   direccion String
   fechaRegistro DateTime @default(now())
   estado String
