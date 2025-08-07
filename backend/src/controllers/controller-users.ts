@@ -1,7 +1,7 @@
 import {Request,Response,NextFunction} from 'express';
 import {PrismaClient} from '@prisma/client';
 import {userSchema} from '../schemas/schemas-users';
-import {errorIdUser,errorUserNotFound,errorValidationUser} from '../errors/errors-users';
+import {errorIdUser,errorUserAlreadyExists,errorUserNotFound,errorValidationUser} from '../errors/errors-users';
 
 const prisma = new PrismaClient();
 
@@ -47,13 +47,22 @@ export const addUser= async (req:Request,res:Response,next:NextFunction):Promise
     try {
         //Validamos con zod que todos los campos sean correctos
         const {data,success,error}=userSchema.safeParse(req.body);
-
         if(!success){
             const errors:string[] = error.issues.map(err=> err.message);
             throw new errorValidationUser('Error de validación: ' + errors.join(', '));
         }
 
         const userData = data;
+
+        // Validar si el usuario ya existe por dni
+        const existingUser = await prisma.user.findUnique({
+            where: { 
+                dni: userData.dni 
+            }
+        });
+        if (existingUser) {
+            throw new errorUserAlreadyExists('El usuario con este dni ya existe');
+        }
 
         await prisma.user.create({
             data: {

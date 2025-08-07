@@ -23,6 +23,13 @@ export class errorUserNotFound extends errorUser {
         this.name = 'errorUserNotFound';
     }
 }
+//Error en caso de que el usuario ya exista:
+export class errorUserAlreadyExists extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'errorUserAlreadyExists';
+    }
+}
 //Error en caso de que la validación con zod falle:
 export class errorValidationUser extends errorUser {
     constructor(message:string){
