@@ -19,9 +19,9 @@ model User {
   name String
   lastName String
   dni Int @unique
-  edad Int
+  age Int
   number String 
-  direccion String
-  fechaRegistro DateTime @default(now())
-  estado String
+  address String
+  registrationDate DateTime @default(now())
+  state String @default("activo")
 }

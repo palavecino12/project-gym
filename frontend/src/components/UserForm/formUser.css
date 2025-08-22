@@ -1,0 +1,13 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.form-container{
+    background-color: rgb(117, 116, 116);
+    border-radius: 15px;
+    padding:40px;
+    display: flex;
+    flex-direction: column;
+}

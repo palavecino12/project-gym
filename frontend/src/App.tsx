@@ -1,9 +1,9 @@
-import CustomForm from "./components/FormUser/formUser";
+import UserSection from './components/UserSection.tsx'
 
 const App =()=> {
   return (
     <div className="App">
-      <CustomForm/>
+      <UserSection/>
     </div>
   );
 }

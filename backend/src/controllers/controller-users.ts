@@ -70,10 +70,10 @@ export const addUser= async (req:Request,res:Response,next:NextFunction):Promise
               name: userData.name,
               lastName: userData.lastName,
               dni: userData.dni,
-              edad: userData.edad,
+              age: userData.age,
               number: userData.number,
-              direccion: userData.direccion,
-              estado: userData.estado
+              address: userData.address,
+              state:"activo" //Apenas se inscriba un usuario su estado va a ser activo
             }
         });
 
