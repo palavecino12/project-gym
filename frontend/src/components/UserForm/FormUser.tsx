@@ -1,6 +1,6 @@
 import {useForm, type SubmitHandler} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import InputForm from '../UserForm/inputFormUser'
+import InputForm from './InputFormUser'
 import {schema,type FormValues} from '../../schemas/schemaForm'
 import { createUser } from '../../services/service-createUser';
 import './formUser.css'
