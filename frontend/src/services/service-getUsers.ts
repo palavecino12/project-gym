@@ -1,1 +1,0 @@
-//Tenemos que traer la lista de usuarios actual del backend
