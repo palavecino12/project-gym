@@ -5,10 +5,14 @@
 import CardUser from "./CardUser";
 import { useGetUsers } from "../../hooks/useGetUsers";
 
+interface props{
+    refresh:boolean
+    handleRefresh:()=>void
+}
 
-const ListUser = ()=>{ 
+const ListUser = ({refresh,handleRefresh}:props)=>{ 
 
-    const {users,loading,error}=useGetUsers()
+    const {users,loading,error}=useGetUsers(refresh)
     
     if(loading){
         return(
@@ -22,7 +26,7 @@ const ListUser = ()=>{
     }
     if(users){
         return(
-        users.map(user=><CardUser key={user.id} name={user.name} lastName={user.lastName} dni={user.dni} />)
+        users.map(user=><CardUser  key={user.id} id={user.id} name={user.name} lastName={user.lastName} dni={user.dni} handleRefresh={handleRefresh} />)
         )
     }
     if (!loading && !error && !users) {

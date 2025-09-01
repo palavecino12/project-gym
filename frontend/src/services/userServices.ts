@@ -17,6 +17,7 @@ export const createUser = async (data:FormValues)=>{
         }
 
     try {
+
         const response = await fetch(url,{
             method:'POST',
             headers:{'Content-Type':'application/json'},
@@ -28,6 +29,7 @@ export const createUser = async (data:FormValues)=>{
         }
         const result=await response.json()
         return result
+
     } catch (error) {
         console.log(error)
         throw error;
@@ -66,4 +68,29 @@ export const getUsers=async():Promise<User[]>=>{
         console.log(error)
         throw error
     }
+}
+
+//Sercicio para eliminar un usuario
+
+export const deleteUser = async (id:number):Promise<string>=>{
+
+    const url=`http://localhost:3000/api/users/deleteUser/${id}`
+
+    try {
+
+        const response= await fetch(url,{
+            method:"DELETE",
+            headers:{"Content-Type":"application/json"}
+        })
+        if(!response.ok){
+            const failed=await response.json()
+            throw new Error(`${failed.message}`)
+        }
+        return `Usuario con id: ${id} eliminado`
+
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+
 }

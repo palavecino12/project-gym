@@ -10,17 +10,21 @@ import ListUser from './UserList/ListUser';
 
 const UserSection = () =>{
 
-    const [showFrom,setShowFrom] = useState(false)
-
+    const [showForm,setShowForm] = useState(false)
     const toggleForm=()=>{
-        setShowFrom(!showFrom)
+        setShowForm(!showForm)
+    }
+
+    const [refreshList, setRefreshList] = useState(false)
+    const toggleRefresh=()=>{
+        setRefreshList(!refreshList)
     }
 
     return(
         <>
-        {showFrom && <CustomForm/>}
-        <ButtonForm onClick={toggleForm} showFrom={showFrom} />
-        <ListUser/>
+        {showForm && <CustomForm closeForm={toggleForm} handleRefresh={toggleRefresh}/>}
+        <ButtonForm onClick={toggleForm} showFrom={showForm} />
+        {!showForm &&<ListUser handleRefresh={toggleRefresh} refresh={refreshList}/>}
         </>
     )
 }

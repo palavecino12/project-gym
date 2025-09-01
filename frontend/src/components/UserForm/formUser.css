@@ -2,12 +2,19 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: rgb(76, 85, 128);
 
 }
 .form-container{
-    background-color: rgb(117, 116, 116);
-    border-radius: 15px;
+    background-color: rgba(109, 122, 185, 0.5);
+    border: none;
+    border-radius: 10px;
     padding:40px;
     display: flex;
     flex-direction: column;
+    width: 500px;
+}
+.btn-submit{
+    color: rgba(221, 208, 208, 0.808);
+    background-color: rgba(0, 0, 0, 0.829);
 }

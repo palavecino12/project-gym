@@ -12,7 +12,7 @@ interface props{
 }
 
 //Hook para traer a todos los usuarios
-export const useGetUsers=():props=>{
+export const useGetUsers=(refresh:boolean):props=>{
 
     const [users,setUsers]=useState<Data>(null)
     const [error,setError]=useState<ErrorType>(null)
@@ -40,7 +40,7 @@ export const useGetUsers=():props=>{
         }
         fetchUser()
 
-    },[])
+    },[refresh])
 
     return {users,error,loading}
 }

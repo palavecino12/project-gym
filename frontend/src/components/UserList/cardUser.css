@@ -1,0 +1,18 @@
+.card-user {
+    display: flex;                  
+    justify-content: space-between; 
+    align-items: center;            
+    padding: 10px;                  
+    margin: 10px;
+    border: none;       
+    border-radius: 5px;             
+    width: 650px;
+    background-color: rgba(109, 122, 185, 0.5);
+    font-size: large;
+}
+
+.actions button {
+    margin-left: 5px; /* espacio entre botones */
+    color: rgba(221, 208, 208, 0.808);
+    background-color: rgba(0, 0, 0, 0.829);
+}

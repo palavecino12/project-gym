@@ -5,14 +5,26 @@ import {schema,type FormValues} from '../../schemas/schemaForm'
 import { createUser } from '../../services/userServices';
 import './formUser.css'
 
-const CustomForm=()=>{
+interface props{
+    closeForm:()=>void
+    handleRefresh:()=>void
+}
 
-    const {control,handleSubmit,formState:{errors}}=useForm<FormValues>({
+const CustomForm=({closeForm,handleRefresh}:props)=>{
+
+    const {control,handleSubmit,formState:{errors},setError}=useForm<FormValues>({
         resolver:zodResolver(schema),
     })
 
     const onSubmit:SubmitHandler<FormValues> = async (data) => {
-        await createUser(data)
+        try {
+            await createUser(data)
+            closeForm()
+            handleRefresh()
+        } catch (error) {
+            setError("root",{type:"network",message:"Error al crear el usuario"})
+            console.log(error)
+        }
     }
 
     return (
@@ -24,7 +36,8 @@ const CustomForm=()=>{
             <InputForm name='age' label='Age' control={control} type='number' error={errors.age} />
             <InputForm name='number' label='Number Phone' control={control} type='text' error={errors.number} />
             <InputForm name='address' label='Address' control={control} type='text' error={errors.address} />
-            <button type="submit">Submit</button>
+            <button className='btn-submit' type="submit">Submit</button>
+            {errors.root && <p className='message-error'>{errors.root.message}</p> }
         </form>
     )
 }

@@ -1,16 +1,28 @@
 .form-group{
-    margin: 5px;
     display: flex;
     flex-direction: column;
+    color: rgba(221, 208, 208, 0.808);
 }
-.form-group input{
-    background-color: white;
+.form-group label{
+    font-size: large;
+}
+.is-valid{
+    background-color: rgb(76, 85, 128);
     color: black;
     border: none;
     box-shadow: 0 12px 10px rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     height: 25px;
+    margin-bottom: 60px;
 }
-.form-group label{
+.is-invalid {
+    background-color: rgb(76, 85, 128);
     color: black;
+    border: 2px solid rgb(197, 95, 95);
+    box-shadow: 0 12px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    height: 25px;
+}
+.message-error{
+    color: rgb(197, 95, 95);
 }

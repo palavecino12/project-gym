@@ -15,9 +15,9 @@ const InputFormUser = ({name, label, control, type, error}: props) => {
         <div className="form-group">
             <label htmlFor={name}>{label}</label>
             <Controller name={name} control={control} render={({field})=>
-                <input id={name} type={type} {...field} className={`form-control ${error? "is-invalid": ""}`}/>
+                <input id={name} type={type} {...field} className={`${error? "is-invalid": "is-valid"}`}/>
             }/>
-            {error && <p>{error.message}</p>}
+            {error && <p className='message-error'>{error.message}</p>}
         </div>
     )
 }
