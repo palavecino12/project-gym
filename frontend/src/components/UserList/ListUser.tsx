@@ -4,6 +4,7 @@
 //Usamos un array de usuarios como ejemplo. Luego traemos los datos del back.
 import CardUser from "./CardUser";
 import { useGetUsers } from "../../hooks/useGetUsers";
+import "./listUser.css"
 
 interface props{
     refresh:boolean
@@ -13,7 +14,7 @@ interface props{
 const ListUser = ({refresh,handleRefresh}:props)=>{ 
 
     const {users,loading,error}=useGetUsers(refresh)
-    
+
     if(loading){
         return(
             <p>Cargando...</p>
@@ -24,17 +25,13 @@ const ListUser = ({refresh,handleRefresh}:props)=>{
             <p>Error: {error.message}</p>
         )
     }
-    if(users){
+    if(users && users.length>0){
         return(
         users.map(user=><CardUser  key={user.id} id={user.id} name={user.name} lastName={user.lastName} dni={user.dni} handleRefresh={handleRefresh} />)
         )
     }
-    if (!loading && !error && !users) {
-        return (
-        <p>No hay usuarios disponibles</p>
-        )
-    }
 
+    return <p className="not-users">No hay usuarios disponibles</p>
 }
 
 export default ListUser;

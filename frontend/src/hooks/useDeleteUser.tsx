@@ -1,7 +1,11 @@
 import { useState } from "react"
 import {deleteUser} from "../services/userServices"
 
-export const useDeleteUser=()=>{
+interface props{
+    handleRefresh:()=>void
+}
+
+export const useDeleteUser=({handleRefresh}:props)=>{
     const [success, setSuccess]= useState<string|null>(null)
     const [error,setError]= useState<Error|null>(null)
     const [loading,setLoading]= useState(false)
@@ -14,6 +18,7 @@ export const useDeleteUser=()=>{
             const data=await deleteUser(id)
             setSuccess(data)
             setError(null)
+            handleRefresh()
             
         } catch (error) {
             

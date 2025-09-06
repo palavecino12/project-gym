@@ -7,22 +7,23 @@
     font-size: large;
 }
 .is-valid{
-    background-color: rgb(76, 85, 128);
+    background-color: rgb(178, 181, 197);
     color: black;
     border: none;
     box-shadow: 0 12px 10px rgba(0, 0, 0, 0.2);
     border-radius: 3px;
-    height: 25px;
-    margin-bottom: 60px;
+    height: 35px;
+    margin-bottom: 50px;
 }
 .is-invalid {
-    background-color: rgb(76, 85, 128);
+    background-color: rgb(178, 181, 197);
     color: black;
-    border: 2px solid rgb(197, 95, 95);
+    border: 2px solid rgb(151, 35, 35);
     box-shadow: 0 12px 10px rgba(0, 0, 0, 0.2);
     border-radius: 3px;
-    height: 25px;
+    height: 35px;
 }
 .message-error{
-    color: rgb(197, 95, 95);
+    color: rgb(151, 35, 35);
+    font-size: small;
 }

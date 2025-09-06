@@ -13,13 +13,13 @@ interface props {
 
 const CardUser = ({name,lastName,dni,id,handleRefresh}:props) =>{
 
-    const {success,loading,error,userDelete} = useDeleteUser()
+    const {success,loading,error,userDelete} = useDeleteUser({handleRefresh})
 
     return(
         <div className="card-user">
             <span className="user-info">{name} {lastName} - {dni}</span>
             <div className="actions">
-                <button onClick={()=>{userDelete(Number(id));handleRefresh()}}>Eliminar</button>
+                <button onClick={()=>{userDelete(Number(id));}}>Eliminar</button>
                 <button>Editar</button>
             </div>
             {error && error.message}

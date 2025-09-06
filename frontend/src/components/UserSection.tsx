@@ -9,12 +9,12 @@ import ButtonForm from './UserForm/ButtonFormUser'
 import ListUser from './UserList/ListUser';
 
 const UserSection = () =>{
-
+    //Estado para aparece o desaparecer el formulario
     const [showForm,setShowForm] = useState(false)
     const toggleForm=()=>{
         setShowForm(!showForm)
     }
-
+    //Estado para que se refresque la lista de usuarios
     const [refreshList, setRefreshList] = useState(false)
     const toggleRefresh=()=>{
         setRefreshList(!refreshList)
