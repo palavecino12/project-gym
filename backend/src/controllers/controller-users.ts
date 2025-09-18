@@ -10,6 +10,7 @@ export const getUsers= async (req:Request,res:Response,next:NextFunction):Promis
     try {
         const users = await prisma.user.findMany();
         res.send(users);
+
     } catch (error) {
         next(error)
     }
@@ -33,8 +34,8 @@ export const getUserById= async (req:Request,res:Response,next:NextFunction):Pro
         if(!user){
             throw new errorUserNotFound('Usuario no encontrado');
         }
-        
         res.send(user);
+
     } catch (error) {
         next(error)
     }
@@ -47,17 +48,16 @@ export const addUser= async (req:Request,res:Response,next:NextFunction):Promise
     try {
         //Validamos con zod que todos los campos sean correctos
         const {data,success,error}=userSchema.safeParse(req.body);
+
         if(!success){
             const errors:string[] = error.issues.map(err=> err.message);
             throw new errorValidationUser('Error de validación: ' + errors.join(', '));
         }
 
-        const userData = data;
-
         // Validar si el usuario ya existe por dni
         const existingUser = await prisma.user.findUnique({
             where: { 
-                dni: userData.dni 
+                dni: data.dni 
             }
         });
         if (existingUser) {
@@ -66,18 +66,18 @@ export const addUser= async (req:Request,res:Response,next:NextFunction):Promise
 
         await prisma.user.create({
             data: {
-              email: userData.email,
-              name: userData.name,
-              lastName: userData.lastName,
-              dni: userData.dni,
-              age: userData.age,
-              number: userData.number,
-              address: userData.address,
-              state:"activo" //Apenas se inscriba un usuario su estado va a ser activo
+                email: data.email,
+                name: data.name,
+                lastName: data.lastName,
+                dni: data.dni,
+                age: data.age,
+                number: data.number,
+                address: data.address,
+                state:"activo" //Apenas se inscriba un usuario su estado va a ser activo
             }
         });
-
         res.status(201).send({message: 'Usuario creado con exito!'});
+
     } catch (error) {
         next(error)
     }
@@ -97,10 +97,45 @@ export const deleteUser= async (req:Request,res:Response,next:NextFunction):Prom
                 id:id
             }
         })
-
         res.status(200).send({message: 'Usuario eliminado con exito!'});
+
     } catch (error) {
         next(error)
         
+    }
+}
+
+//Funcion para editar un usuario
+export const updateUser= async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
+    try {
+        const id = parseInt(req.params.id)
+
+        if(isNaN(id)){
+            throw new errorIdUser('El ID debe ser un número');
+        }
+
+        //Validamos con zod que todos los campos esten presentes y correctos
+        const {data,success,error}=userSchema.safeParse(req.body);
+
+        if(!success){
+            const errors:string[] = error.issues.map(err=> err.message);
+            throw new errorValidationUser('Error de validación: ' + errors.join(', '));
+        }
+
+        await prisma.user.update({
+            where:{
+                id:id
+            },
+            data:data
+        })
+        res.status(200).send({message: 'Usuario editado con exito!'});
+
+    } catch (error:any) {
+        if (error.code === 'P2002') {
+            const field = (error.meta?.target as string);
+            console.log(error)
+            throw new errorUserAlreadyExists(`Ya existe un usuario con el mismo ${field.replace("User_", "").replace("_key", "")}`);
+        }
+        next(error);
     }
 }

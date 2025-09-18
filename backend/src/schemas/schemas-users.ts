@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 //Schema de validaciones para el usuario
 export const userSchema=z.object({
     email: z.string().email("El email tiene que tener formato del mismo"),
