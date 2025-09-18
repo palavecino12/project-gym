@@ -4,8 +4,8 @@
 //logica de si renderizar el formulario o no
 
 import { useState } from 'react';
-import CustomForm from './UserForm/FormUser'
-import ButtonForm from './UserForm/ButtonFormUser'
+import CustomForm from './UserCreateForm/FormUser'
+import ButtonForm from './UserCreateForm/ButtonFormUser'
 import ListUser from './UserList/ListUser';
 
 const UserSection = () =>{

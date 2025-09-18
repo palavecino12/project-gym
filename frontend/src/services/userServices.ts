@@ -1,7 +1,6 @@
 import { type FormValues } from "../schemas/schemaForm"
 
 //Servicio para crear un usuario
-
 export const createUser = async (data:FormValues)=>{
 
     const url = "http://localhost:3000/api/users/addUser"
@@ -37,7 +36,6 @@ export const createUser = async (data:FormValues)=>{
 }
 
 //Servicio para traer a todos los usuarios
-
 export type User = {
     id: number;
     email: string;
@@ -71,7 +69,6 @@ export const getUsers=async():Promise<User[]>=>{
 }
 
 //Sercicio para eliminar un usuario
-
 export const deleteUser = async (id:number):Promise<string>=>{
 
     const url=`http://localhost:3000/api/users/deleteUser/${id}`
@@ -93,4 +90,30 @@ export const deleteUser = async (id:number):Promise<string>=>{
         throw error
     }
 
+}
+
+//Servicio para editar un usuario
+export const updateUser = async (user:User):Promise<User>=>{
+    
+    const url = `http://localhost:3000/api/users/updateUser/${user.id}`
+
+    try {
+        
+        const response= await fetch(url,{
+            method:'PUT',
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(user)
+        })
+
+        if(!response.ok){
+            throw new Error("Error en traer a todos los usuarios")
+        }
+
+        const data=response.json();
+        return data;
+
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
 }
