@@ -40,7 +40,7 @@ export const useGetUsers=(refresh:boolean):props=>{
         }
         fetchUser()
 
-    },[refresh])
+    },[refresh]) //Este refresh va a cambiar su valor cada vez que un usuario modifique la lista, de esta forma se actualiza el listado para mostrar los cambios
 
     return {users,error,loading}
 }

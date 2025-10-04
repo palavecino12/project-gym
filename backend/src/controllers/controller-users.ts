@@ -55,13 +55,23 @@ export const addUser= async (req:Request,res:Response,next:NextFunction):Promise
         }
 
         // Validar si el usuario ya existe por dni
-        const existingUser = await prisma.user.findUnique({
+        const existingUserId = await prisma.user.findUnique({
             where: { 
                 dni: data.dni 
             }
         });
-        if (existingUser) {
+        if (existingUserId) {
             throw new errorUserAlreadyExists('El usuario con este dni ya existe');
+        }
+
+        // Validar si el usuario ya existe por gmail
+        const existingUserEmail = await prisma.user.findUnique({
+            where: { 
+                email: data.email 
+            }
+        });
+        if (existingUserEmail) {
+            throw new errorUserAlreadyExists('El usuario con este email ya existe');
         }
 
         await prisma.user.create({
@@ -76,7 +86,7 @@ export const addUser= async (req:Request,res:Response,next:NextFunction):Promise
                 state:"activo" //Apenas se inscriba un usuario su estado va a ser activo
             }
         });
-        res.status(201).send({message: 'Usuario creado con exito!'});
+        res.status(200).send({message: 'Usuario creado con exito!'});
 
     } catch (error) {
         next(error)
@@ -133,7 +143,6 @@ export const updateUser= async (req:Request,res:Response,next:NextFunction):Prom
     } catch (error:any) {
         if (error.code === 'P2002') {
             const field = (error.meta?.target as string);
-            console.log(error)
             throw new errorUserAlreadyExists(`Ya existe un usuario con el mismo ${field.replace("User_", "").replace("_key", "")}`);
         }
         next(error);

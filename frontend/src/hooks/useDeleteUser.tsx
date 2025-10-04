@@ -1,3 +1,5 @@
+//Este hook esta enfocado en mostrar mensaje de: exito | error | cargando para el componente
+
 import { useState } from "react"
 import {deleteUser} from "../services/userServices"
 
@@ -6,7 +8,7 @@ interface props{
 }
 
 export const useDeleteUser=({handleRefresh}:props)=>{
-    const [success, setSuccess]= useState<string|null>(null)
+    const [message, setMessage]= useState<{message:string}|null>(null)
     const [error,setError]= useState<Error|null>(null)
     const [loading,setLoading]= useState(false)
 
@@ -15,8 +17,8 @@ export const useDeleteUser=({handleRefresh}:props)=>{
         try {
             
             setLoading(true)
-            const data=await deleteUser(id)
-            setSuccess(data)
+            const message=await deleteUser(id)
+            setMessage(message)
             setError(null)
             handleRefresh()
             
@@ -34,5 +36,5 @@ export const useDeleteUser=({handleRefresh}:props)=>{
 
     }
 
-    return {success,error,loading,userDelete}
+    return {message,error,loading,userDelete}
 }

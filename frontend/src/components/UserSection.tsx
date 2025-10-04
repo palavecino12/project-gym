@@ -4,27 +4,32 @@
 //logica de si renderizar el formulario o no
 
 import { useState } from 'react';
-import CustomForm from './UserCreateForm/FormUser'
-import ButtonForm from './UserCreateForm/ButtonFormUser'
-import ListUser from './UserList/ListUser';
+import { FormUserCreate } from './FormUserCreate/FormUserCreate';
+import ButtonForm from './FormUser/ButtonFormUser'
+import ListUser from './LIstUser/ListUser';
 
 const UserSection = () =>{
-    //Estado para aparece o desaparecer el formulario
-    const [showForm,setShowForm] = useState(false)
-    const toggleForm=()=>{
-        setShowForm(!showForm)
-    }
     //Estado para que se refresque la lista de usuarios
     const [refreshList, setRefreshList] = useState(false)
     const toggleRefresh=()=>{
         setRefreshList(!refreshList)
     }
+    //Estado para aparecer o desaparecer el formulario donde creamos el usuario
+    const [showCreateForm,setShowCreateForm] = useState(false)
+    const toggleCreateForm=()=>{
+        setShowCreateForm(!showCreateForm)
+    }
+    //Estado para aparecer o desaparecer el formulario donde editamos el usuario
+    //const [showUpdateForm,setShowUpdateForm] = useState(false)
+    //const toggleUpdateForm=()=>{
+    //    setShowUpdateForm(!showUpdateForm)
+    //}
 
     return(
         <>
-        {showForm && <CustomForm closeForm={toggleForm} handleRefresh={toggleRefresh}/>}
-        <ButtonForm onClick={toggleForm} showFrom={showForm} />
-        {!showForm &&<ListUser handleRefresh={toggleRefresh} refresh={refreshList}/>}
+        {showCreateForm && <FormUserCreate closeForm={toggleCreateForm} handleRefresh={toggleRefresh}/>}
+        <ButtonForm onClick={toggleCreateForm} showFrom={showCreateForm} />
+        {!showCreateForm &&<ListUser handleRefresh={toggleRefresh} refresh={refreshList}/>}
         </>
     )
 }

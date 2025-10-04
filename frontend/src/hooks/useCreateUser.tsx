@@ -1,24 +1,25 @@
 //Este hook esta enfocado en mostrar mensaje de: exito | error | cargando para el componente
 
-import { useState } from "react";
-import { updateUser} from "../services/userServices";
-import { type FormValues } from "../schemas/schemaForm";
+import { useState } from "react"
+import type { FormValues } from "../schemas/schemaForm";
+import { createUser } from "../services/userServices";
 
-export const useUpdateUser=()=>{
+export const useCreateUser=()=>{
 
     const [message,setMessage]=useState<{message:string}|null>(null);
     const [error,setError]=useState<Error|null>(null);
     const [loading,setLoading]=useState(false);
 
-    const userUpdate=async(user:FormValues,id:number)=>{
+    const userCreate=async(user:FormValues)=>{
         try {
-
+            
             setLoading(true)
-            const message=await updateUser(user,id);
+            const message=await createUser(user)
             setMessage(message)
+            setError(null)
 
         } catch (error) {
-
+            
             if (error instanceof Error) {
                 setError(error);
             } else {
@@ -29,5 +30,6 @@ export const useUpdateUser=()=>{
             setLoading(false)
         }
     }
-    return {message,error,loading,userUpdate}
+    return {message,error,loading,userCreate}
+
 }

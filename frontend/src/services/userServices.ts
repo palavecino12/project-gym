@@ -1,7 +1,7 @@
 import { type FormValues } from "../schemas/schemaForm"
 
 //Servicio para crear un usuario
-export const createUser = async (data:FormValues)=>{
+export const createUser = async (data:FormValues):Promise<{message:string}>=>{
 
     const url = "http://localhost:3000/api/users/addUser"
 
@@ -22,12 +22,14 @@ export const createUser = async (data:FormValues)=>{
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify(res)
         })
+        //Capturamos el error del backend y lo mostramos
         if(!response.ok){
             const errorData = await response.json();
-            throw new Error(`Error al crear usuario:${errorData.message}`);
+            throw new Error(`Error al crear usuario: ${errorData.message}`);
         }
-        const result=await response.json()
-        return result
+        
+        const message=await response.json()
+        return message
 
     } catch (error) {
         console.log(error)
@@ -69,7 +71,7 @@ export const getUsers=async():Promise<User[]>=>{
 }
 
 //Sercicio para eliminar un usuario
-export const deleteUser = async (id:number):Promise<string>=>{
+export const deleteUser = async (id:number):Promise<{message:string}>=>{
 
     const url=`http://localhost:3000/api/users/deleteUser/${id}`
 
@@ -83,7 +85,9 @@ export const deleteUser = async (id:number):Promise<string>=>{
             const failed=await response.json()
             throw new Error(`${failed.message}`)
         }
-        return `Usuario con id: ${id} eliminado`
+
+        const message = await response.json();
+        return message;
 
     } catch (error) {
         console.log(error)
@@ -92,10 +96,10 @@ export const deleteUser = async (id:number):Promise<string>=>{
 
 }
 
-//Servicio para editar un usuario
-export const updateUser = async (user:User):Promise<User>=>{
+//Servicio para editar el usuario
+export const updateUser = async (user:FormValues,id:number):Promise<{message:string}>=>{
     
-    const url = `http://localhost:3000/api/users/updateUser/${user.id}`
+    const url = `http://localhost:3000/api/users/updateUser/${id}`
 
     try {
         
@@ -106,11 +110,11 @@ export const updateUser = async (user:User):Promise<User>=>{
         })
 
         if(!response.ok){
-            throw new Error("Error en traer a todos los usuarios")
+            throw new Error("Error al editar el usuarios")
         }
 
-        const data=response.json();
-        return data;
+        const message=await response.json();
+        return message;
 
     } catch (error) {
         console.log(error)
