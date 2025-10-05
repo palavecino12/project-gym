@@ -7,12 +7,14 @@ import InputForm from "./InputFormUser"
 import "./formUser.css"
 
 interface props{
+    title:string
     initialValues?:Partial<FormValues>//Si esta variable llega vacia, se crea un usuario con los datos que ingrese. Si llega con datos, es para editar 
     onSubmit:(data:FormValues)=>Promise<void>//onBumit va a ser la funcion de crear el usuario o editarlo
     buttonText:string
+    closeForm:()=>void
 }
 
-export const FormUser=({initialValues,buttonText,onSubmit}:props)=>{
+export const FormUser=({title,initialValues,buttonText,onSubmit,closeForm}:props)=>{
 
     //Validamos los datos del usuario
     const {control,handleSubmit,formState:{errors},setError}=useForm<FormValues>({
@@ -33,6 +35,7 @@ export const FormUser=({initialValues,buttonText,onSubmit}:props)=>{
 
         return (
         <form onSubmit={handleSubmit(handleFormSubmit)} className='form-container'>
+            {<h1>{title}</h1>}
             <InputForm name='name' label='Name' control={control} type='text' error={errors.name} />
             <InputForm name='lastName' label='Last Name' control={control} type='text' error={errors.lastName} />
             <InputForm name='email' label='Email' control={control} type='email' error={errors.email} />
@@ -41,7 +44,8 @@ export const FormUser=({initialValues,buttonText,onSubmit}:props)=>{
             <InputForm name='number' label='Number Phone' control={control} type='text' error={errors.number} />
             <InputForm name='address' label='Address' control={control} type='text' error={errors.address} />
 
-            <button className='btn-submit' type="submit">{buttonText}</button>
+            <button className='btn submit' type="submit">{buttonText}</button>
+            <button className='btn cancel' type="button" onClick={closeForm}>Cancelar</button>
             {errors.root && <p className='message-error'>{errors.root.message}</p> }
         </form>
     )

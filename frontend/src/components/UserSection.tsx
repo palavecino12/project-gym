@@ -33,9 +33,9 @@ const UserSection = () =>{
     return(
         <>
         {showCreateForm && <FormUserCreate closeForm={toggleCreateForm} handleRefresh={toggleRefresh}/>}
-        <ButtonForm onClick={toggleCreateForm} showFrom={showCreateForm} />
-        {!showCreateForm&&!showUpdateForm &&<ListUser handleRefresh={toggleRefresh} refresh={refreshList} userUpdate={setUserUpdate} showForm={toggleUpdateForm}/>}
         {showUpdateForm && <FormUserUpdate closeForm={toggleUpdateForm} handleRefresh={toggleRefresh} user={userUpdate}/>}
+        {!showCreateForm&&!showUpdateForm && <ButtonForm onClick={toggleCreateForm}/>}
+        {!showCreateForm&&!showUpdateForm && <ListUser handleRefresh={toggleRefresh} refresh={refreshList} userUpdate={setUserUpdate} showForm={toggleUpdateForm}/>}
         </>
     )
 }

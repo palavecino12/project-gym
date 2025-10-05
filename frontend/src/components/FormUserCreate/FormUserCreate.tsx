@@ -22,7 +22,7 @@ export const FormUserCreate=({closeForm,handleRefresh}:props)=>{
 
     return(
         <>
-        <FormUser initialValues={{}} onSubmit={handleCreate} buttonText="Crear"/>
+        <FormUser initialValues={{}} onSubmit={handleCreate} buttonText="Crear" title="Añadir Usuario" closeForm={closeForm}/>
         
         {message && <p>{message?.message}</p>}
         {loading && <p>Cargando...</p>}

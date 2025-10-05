@@ -35,7 +35,7 @@ export const FormUserUpdate=({closeForm,handleRefresh,user}:props)=>{
             age:String(user?.age),
             number:user?.number,
             address:user?.address
-        }} onSubmit={handleUpdate} buttonText="Editar"/>
+        }} onSubmit={handleUpdate} buttonText="Editar" title="Editar Usuario" closeForm={closeForm}/>
 
         {loading && <p>Cargando...</p>}
         {error && <p>{error.message}</p>}

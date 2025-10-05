@@ -5,14 +5,11 @@ import "./buttonFormUser.css"
 
 interface props{
     onClick:()=>void;
-    showFrom:boolean;
 }
 
-const ButtonForm =({onClick,showFrom}:props)=>{
+const ButtonForm =({onClick}:props)=>{
     return (
-        <button onClick={onClick}>
-            {showFrom ? "Cancelar" : "Añadir"}
-        </button>
+        <button onClick={onClick}>Añadir</button>
     )
 }
 
