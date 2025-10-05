@@ -4,14 +4,18 @@
 //Usamos un array de usuarios como ejemplo. Luego traemos los datos del back.
 import CardUser from "./CardUser";
 import { useGetUsers } from "../../hooks/useGetUsers";
+import {type User} from "../../services/userServices"
 import "./listUser.css"
 
 interface props{
     refresh:boolean
-    handleRefresh:()=>void
+    handleRefresh:()=>void//Se pasa a CardUser
+    userUpdate:React.Dispatch<React.SetStateAction<User|null>>//Se pasa a CardUser
+    showForm:()=>void//Se pasa al CardUser
+
 }
 
-const ListUser = ({refresh,handleRefresh}:props)=>{ 
+const ListUser = ({refresh,handleRefresh,userUpdate,showForm}:props)=>{ 
 
     const {users,loading,error}=useGetUsers(refresh)
 
@@ -27,7 +31,7 @@ const ListUser = ({refresh,handleRefresh}:props)=>{
     }
     if(users && users.length>0){
         return(
-        users.map(user=><CardUser  key={user.id} id={user.id} name={user.name} lastName={user.lastName} dni={user.dni} handleRefresh={handleRefresh} />)
+        users.map(user=><CardUser  key={user.id} user={user} handleRefresh={handleRefresh} userUpdate={userUpdate} showForm={showForm}/>)
         )
     }
 

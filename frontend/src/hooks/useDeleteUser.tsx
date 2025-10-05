@@ -20,7 +20,7 @@ export const useDeleteUser=({handleRefresh}:props)=>{
             const message=await deleteUser(id)
             setMessage(message)
             setError(null)
-            handleRefresh()
+            handleRefresh()//Actualizamos la lista
             
         } catch (error) {
             

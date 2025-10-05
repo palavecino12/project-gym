@@ -2,29 +2,30 @@
 //Este componente mas adelante tendra los botones para modificar o eliminar el usuario
 import "./cardUser.css"
 import { useDeleteUser } from "../../hooks/useDeleteUser"
+import type { User } from "../../services/userServices"
 
 interface props {
-    id:number,
-    name:string,
-    lastName:string,
-    dni:number,
-    handleRefresh:()=>void    
+    user:User
+    handleRefresh:()=>void//Se lo pasamos al hook useDeleteUser
+    userUpdate:React.Dispatch<React.SetStateAction<User | null>>//Se lo pasamos al boton de editar
+    showForm:()=>void
 }
 
-const CardUser = ({name,lastName,dni,id,handleRefresh}:props) =>{
+const CardUser = ({user,handleRefresh,userUpdate,showForm}:props) =>{
 
-    const {success,loading,error,userDelete} = useDeleteUser({handleRefresh})
+    const {message,loading,error,userDelete} = useDeleteUser({handleRefresh})
 
     return(
         <div className="card-user">
-            <span className="user-info">{name} {lastName} - {dni}</span>
+            <span className="user-info">{user.name} {user.lastName} - {user.dni}</span>
             <div className="actions">
-                <button onClick={()=>{userDelete(Number(id));}}>Eliminar</button>
-                <button>Editar</button>
+                <button onClick={()=>{userDelete(Number(user.id));}}>Eliminar</button>
+                <button onClick={()=>{userUpdate(user);showForm()}}>Editar</button>
             </div>
+
             {error && error.message}
             {loading && "Cargando..."}
-            {success && success}
+            {message && message.message}
         </div>
 
 

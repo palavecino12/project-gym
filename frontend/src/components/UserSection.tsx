@@ -5,8 +5,10 @@
 
 import { useState } from 'react';
 import { FormUserCreate } from './FormUserCreate/FormUserCreate';
+import { FormUserUpdate } from './FormUserUpdate/FormUserUpdate';
 import ButtonForm from './FormUser/ButtonFormUser'
 import ListUser from './LIstUser/ListUser';
+import type { User } from '../services/userServices';
 
 const UserSection = () =>{
     //Estado para que se refresque la lista de usuarios
@@ -20,16 +22,20 @@ const UserSection = () =>{
         setShowCreateForm(!showCreateForm)
     }
     //Estado para aparecer o desaparecer el formulario donde editamos el usuario
-    //const [showUpdateForm,setShowUpdateForm] = useState(false)
-    //const toggleUpdateForm=()=>{
-    //    setShowUpdateForm(!showUpdateForm)
-    //}
+    const [showUpdateForm,setShowUpdateForm] = useState(false)
+    const toggleUpdateForm=()=>{
+        setShowUpdateForm(!showUpdateForm)
+    }
+
+    //Estado donde vamos a almacenar los datos del usuario a editar
+    const [userUpdate,setUserUpdate]=useState<User|null>(null)
 
     return(
         <>
         {showCreateForm && <FormUserCreate closeForm={toggleCreateForm} handleRefresh={toggleRefresh}/>}
         <ButtonForm onClick={toggleCreateForm} showFrom={showCreateForm} />
-        {!showCreateForm &&<ListUser handleRefresh={toggleRefresh} refresh={refreshList}/>}
+        {!showCreateForm&&!showUpdateForm &&<ListUser handleRefresh={toggleRefresh} refresh={refreshList} userUpdate={setUserUpdate} showForm={toggleUpdateForm}/>}
+        {showUpdateForm && <FormUserUpdate closeForm={toggleUpdateForm} handleRefresh={toggleRefresh} user={userUpdate}/>}
         </>
     )
 }

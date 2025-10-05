@@ -1,7 +1,7 @@
 //Componente especifico para crear un usuario usando el formulario reutilizable
 import { FormUser } from "../FormUser/FormUser"
-import { createUser } from "../../services/userServices"
 import type { FormValues } from "../../schemas/schemaForm"
+import { useCreateUser } from "../../hooks/useCreateUser"
 
 interface props{
     closeForm:()=>void
@@ -9,14 +9,25 @@ interface props{
 }
 
 export const FormUserCreate=({closeForm,handleRefresh}:props)=>{
+    const {message,error,loading,userCreate}= useCreateUser()
+
     const handleCreate=async(data:FormValues)=>{
-        await createUser(data)
-        closeForm()
-        handleRefresh()
+        await userCreate(data)
+        //En caso de error que no cierre el form asi se puede ver el mensaje de error
+        if(!error){
+            closeForm()
+            handleRefresh()
+        }
     }
 
     return(
+        <>
         <FormUser initialValues={{}} onSubmit={handleCreate} buttonText="Crear"/>
+        
+        {message && <p>{message?.message}</p>}
+        {loading && <p>Cargando...</p>}
+        {error && <p>{error.message}</p>}
+        </>
     )
 }
 

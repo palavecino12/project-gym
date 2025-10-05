@@ -138,7 +138,7 @@ export const updateUser= async (req:Request,res:Response,next:NextFunction):Prom
             },
             data:data
         })
-        res.status(200).send({message: 'Usuario editado con exito!'});
+        res.status(200).send({message:'Usuario editado con exito!'})
 
     } catch (error:any) {
         if (error.code === 'P2002') {
