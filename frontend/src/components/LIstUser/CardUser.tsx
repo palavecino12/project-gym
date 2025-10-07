@@ -6,9 +6,9 @@ import type { User } from "../../services/userServices"
 
 interface props {
     user:User
-    handleRefresh:()=>void//Se lo pasamos al hook useDeleteUser
+    handleRefresh:()=>void//Se lo pasamos al hook useDeleteUser para que la lista se actualice luego de eliminar el usuario
     userUpdate:React.Dispatch<React.SetStateAction<User | null>>//Se lo pasamos al boton de editar
-    showForm:()=>void
+    showForm:()=>void//Se lo pasamos al boton de editar, es para cerrar el formulario
 }
 
 const CardUser = ({user,handleRefresh,userUpdate,showForm}:props) =>{

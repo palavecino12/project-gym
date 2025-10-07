@@ -1,15 +1,21 @@
 import { type FormValues } from "../schemas/schemaForm"
 
 //Servicio para crear un usuario
+//Aclaracion: en el front usamos "age" como string por problemas con zod, antes de mandar la data al back lo transformamos en numero
 export const createUser = async (data:FormValues):Promise<{message:string}>=>{
 
     const url = "http://localhost:3000/api/users/addUser"
+
+    //Validamos que "age" sea un numero
+    if (isNaN(Number(data.age))) {
+        throw new Error("La edad debe ser un número válido");
+    }
 
     const res= {
             email:data.email,
             name:data.name,
             lastName:data.lastName,
-            dni:Number(data.dni),
+            dni:data.dni,
             age:Number(data.age),
             number:data.number,
             address:data.address
@@ -43,7 +49,7 @@ export type User = {
     email: string;
     name: string;
     lastName: string;
-    dni: number;
+    dni: string;
     age: number;
     number: string;
     address: string;
@@ -97,20 +103,33 @@ export const deleteUser = async (id:number):Promise<{message:string}>=>{
 }
 
 //Servicio para editar el usuario
+//Aclaracion: en el front usamos "age" como string por problemas con zod, antes de mandar la data al back lo transformamos en numero
+
 export const updateUser = async (user:FormValues,id:number):Promise<{message:string}>=>{
     
     const url = `http://localhost:3000/api/users/updateUser/${id}`
+
+    const res= {
+            email:user.email,
+            name:user.name,
+            lastName:user.lastName,
+            dni:user.dni,
+            age:Number(user.age),//Transformamos
+            number:user.number,
+            address:user.address
+        }
 
     try {
         
         const response= await fetch(url,{
             method:'PUT',
             headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(user)
+            body:JSON.stringify(res)
         })
 
         if(!response.ok){
-            throw new Error("Error al editar el usuarios")
+            const failed=await response.json()
+            throw new Error(`${failed.message}`)
         }
 
         const message=await response.json();

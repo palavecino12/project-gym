@@ -12,6 +12,7 @@ export const FormUserCreate=({closeForm,handleRefresh}:props)=>{
     const {message,error,loading,userCreate}= useCreateUser()
 
     const handleCreate=async(data:FormValues)=>{
+
         await userCreate(data)
         //En caso de error que no cierre el form asi se puede ver el mensaje de error
         if(!error){

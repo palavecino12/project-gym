@@ -18,7 +18,7 @@ model User {
   email String @unique
   name String
   lastName String
-  dni Int @unique
+  dni String @unique
   age Int
   number String 
   address String

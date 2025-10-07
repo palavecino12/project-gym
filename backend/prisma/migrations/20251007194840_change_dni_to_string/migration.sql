@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `User` MODIFY `dni` VARCHAR(191) NOT NULL;

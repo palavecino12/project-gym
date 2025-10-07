@@ -1,7 +1,4 @@
-//Aqui va la logica para mostrar el formulario o no
-//Tengo que importa el boton y el formulario
-//Aqui tengo que crear un componente donde renderiza el boton y contiene
-//logica de si renderizar el formulario o no
+//Este archivo maneja la logica de que componente se renderiza
 
 import { useState } from 'react';
 import { FormUserCreate } from './FormUserCreate/FormUserCreate';
