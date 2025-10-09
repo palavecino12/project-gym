@@ -1,5 +1,5 @@
 import {Request,Response,NextFunction} from 'express';
-import {PrismaClient} from '@prisma/client';
+import {PrismaClient,Prisma} from '@prisma/client';
 import {userSchema} from '../schemas/schemas-users';
 import {errorIdUser,errorUserAlreadyExists,errorUserNotFound,errorValidationUser} from '../errors/errors-users';
 
@@ -16,25 +16,23 @@ export const getUsers= async (req:Request,res:Response,next:NextFunction):Promis
     }
 }
 
-//Funcion para obtener un usuario por id
-export const getUserById= async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
+//Funcion para obtener un usuario por nombre
+export const getUserByName= async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
     try {
-        const id=parseInt(req.params.id);
-
-        if (isNaN(id)){
-            throw new errorIdUser('El ID debe ser un número');
-        }
-
-        const user= await prisma.user.findFirst({
+        const name=(req.query.name as string)|| "";
+        
+        const users= await prisma.user.findMany({
             where:{
-                id:id
+                name:{
+                    contains:name,
+                }
             }
         })
 
-        if(!user){
+        if(!users.length){
             throw new errorUserNotFound('Usuario no encontrado');
         }
-        res.send(user);
+        res.send(users);
 
     } catch (error) {
         next(error)
@@ -141,10 +139,12 @@ export const updateUser= async (req:Request,res:Response,next:NextFunction):Prom
         res.status(200).send({message:'Usuario editado con exito!'})
 
     } catch (error:any) {
+
         if (error.code === 'P2002') {
             const field = (error.meta?.target as string);
             throw new errorUserAlreadyExists(`Ya existe un usuario con el mismo ${field.replace("User_", "").replace("_key", "")}`);
         }
         next(error);
+
     }
 }
