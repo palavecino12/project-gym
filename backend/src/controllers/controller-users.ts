@@ -19,13 +19,12 @@ export const getUsers= async (req:Request,res:Response,next:NextFunction):Promis
 //Funcion para obtener un usuario por nombre
 export const getUserByName= async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
     try {
-        const name=(req.query.name as string)|| "";
+        const fullName = (req.query.name as string) || "";
+        const [name, lastName] = fullName.split(" ");
         
         const users= await prisma.user.findMany({
             where:{
-                name:{
-                    contains:name,
-                }
+                AND:[{name:{contains:name}},{lastName:{contains:lastName}}]
             }
         })
 
