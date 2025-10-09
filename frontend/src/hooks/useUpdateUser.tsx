@@ -10,12 +10,13 @@ export const useUpdateUser=()=>{
     const [error,setError]=useState<Error|null>(null);
     const [loading,setLoading]=useState(false);
 
-    const userUpdate=async(user:FormValues,id:number)=>{
+    const userUpdate=async(user:FormValues,id:number):Promise<boolean>=>{
         try {
 
             setLoading(true)
             const message=await updateUser(user,id);
             setMessage(message)
+            return true
 
         } catch (error) {
 
@@ -24,6 +25,7 @@ export const useUpdateUser=()=>{
             } else {
                 setError(new Error("Error desconocido"));
             }
+            return false
 
         }finally{
             setLoading(false)

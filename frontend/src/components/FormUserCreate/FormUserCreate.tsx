@@ -11,15 +11,19 @@ interface props{
 export const FormUserCreate=({closeForm,handleRefresh}:props)=>{
     const {message,error,loading,userCreate}= useCreateUser()
 
+    
     const handleCreate=async(data:FormValues)=>{
-
-        await userCreate(data)
+        
+        const success=await userCreate(data)
+        
         //En caso de error que no cierre el form asi se puede ver el mensaje de error
-        if(!error){
+        if(success){
             closeForm()
             handleRefresh()
         }
     }
+    //Luego de que se ejecute handleCreate se produce un re-render y "error" toma el nuevo valor
+    //De esta forma podemos ver el mensaje de error correctamente
 
     return(
         <>

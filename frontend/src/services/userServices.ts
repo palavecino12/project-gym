@@ -109,6 +109,11 @@ export const updateUser = async (user:FormValues,id:number):Promise<{message:str
     
     const url = `http://localhost:3000/api/users/updateUser/${id}`
 
+    //Validamos que "age" sea un numero
+    if (isNaN(Number(user.age))) {
+        throw new Error("La edad debe ser un número válido");
+    }
+
     const res= {
             email:user.email,
             name:user.name,

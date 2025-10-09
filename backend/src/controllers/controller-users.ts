@@ -41,7 +41,7 @@ export const getUserById= async (req:Request,res:Response,next:NextFunction):Pro
     }
 }
 
-//Funcion para agregar un usuario
+//Funcion para crear un usuario
 export const addUser= async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
 
 

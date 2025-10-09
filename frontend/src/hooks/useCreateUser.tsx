@@ -10,26 +10,27 @@ export const useCreateUser=()=>{
     const [error,setError]=useState<Error|null>(null);
     const [loading,setLoading]=useState(false);
 
-    const userCreate=async(user:FormValues)=>{
+    const userCreate=async(user:FormValues):Promise<boolean>=>{
         try {
             
             setLoading(true)
             const message=await createUser(user)
             setMessage(message)
             setError(null)
+            return true
 
-        } catch (error) {
-            
-            if (error instanceof Error) {
-                setError(error);
+        } catch (err) {
+
+            if (err instanceof Error) {
+                setError(err);//Programa una actualizacion de estado para el proximo render
             } else {
                 setError(new Error("Error desconocido"));
             }
+            return false
 
         }finally{
             setLoading(false)
         }
     }
     return {message,error,loading,userCreate}
-
 }

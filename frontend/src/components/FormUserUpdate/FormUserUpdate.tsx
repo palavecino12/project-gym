@@ -16,12 +16,13 @@ export const FormUserUpdate=({closeForm,handleRefresh,user}:props)=>{
 
     const handleUpdate=async(data:FormValues)=>{
         if (user){
-            await userUpdate(data,user.id)
-        }
-        //En caso de error no cerramos el formulario
-        if(!error){
-            closeForm()
-            handleRefresh()
+            const success=await userUpdate(data,user.id)
+
+            //En caso de error no cerramos el formulario
+            if(success){
+                closeForm()
+                handleRefresh()
+            }
         }
     }
 
