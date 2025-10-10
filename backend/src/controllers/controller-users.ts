@@ -19,14 +19,29 @@ export const getUsers= async (req:Request,res:Response,next:NextFunction):Promis
 //Funcion para obtener un usuario por nombre
 export const getUserByName= async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
     try {
+        //Busqueda flexible de usuario por nombre y/o apellido, o al reves.
         const fullName = (req.query.name as string) || "";
-        const [name, lastName] = fullName.split(" ");
+        const words = fullName.split(" ").filter(Boolean);//Almacenamos nombre y apellido como array
+
+        //Buscamos el nombre tanto en la lista de nombres como en la de apellidos, de la misma forma con el apellido
+        const conditions= words.map(word=>({
+            OR:[
+                {name:{contains:word}},
+                {lastName:{contains:word}}
+            ]
+        }))
         
-        const users= await prisma.user.findMany({
-            where:{
-                AND:[{name:{contains:name}},{lastName:{contains:lastName}}]
-            }
-        })
+        //Almacenamos el codigo de busqueda completo con el AND 
+        let whereClause;
+        if (conditions.length > 0) {
+            whereClause = { AND: conditions };
+        } else {
+            whereClause = {};
+        }
+
+        const users = await prisma.user.findMany({
+            where: whereClause
+        });
 
         if(!users.length){
             throw new errorUserNotFound('Usuario no encontrado');
