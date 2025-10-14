@@ -1,47 +1,5 @@
 import { type FormValues } from "../schemas/schemaForm"
 
-//Servicio para crear un usuario
-//Aclaracion: en el front usamos "age" como string por problemas con zod, antes de mandar la data al back lo transformamos en numero
-export const createUser = async (data:FormValues):Promise<{message:string}>=>{
-
-    const url = "http://localhost:3000/api/users/addUser"
-
-    //Validamos que "age" sea un numero
-    if (isNaN(Number(data.age))) {
-        throw new Error("La edad debe ser un número válido");
-    }
-
-    const res= {
-            email:data.email,
-            name:data.name,
-            lastName:data.lastName,
-            dni:data.dni,
-            age:Number(data.age),
-            number:data.number,
-            address:data.address
-        }
-
-    try {
-
-        const response = await fetch(url,{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify(res)
-        })
-        //Capturamos el error del backend y lo mostramos
-        if(!response.ok){
-            const errorData = await response.json();
-            throw new Error(`Error al crear usuario: ${errorData.message}`);
-        }
-        
-        const message=await response.json()
-        return message
-
-    } catch (error) {
-        console.log(error)
-        throw error;
-    }
-}
 
 //Servicio para traer a todos los usuarios
 export type User = {
@@ -64,6 +22,7 @@ export const getUsers=async():Promise<User[]>=>{
     try {
         
         const response=await fetch(url)
+        
     if(!response.ok){
         throw new Error("Error en traer a todos los usuarios")
     }
@@ -73,6 +32,75 @@ export const getUsers=async():Promise<User[]>=>{
     } catch (error) {
         console.log(error)
         throw error
+    }
+}
+
+//Servicio para filtrar lista de usuarios segun lo que busque el cliente
+export const searchUser=async (fullName:string)=>{
+
+    const url=`http://localhost:3000/api/users/getUser?fullName=${fullName}`
+
+    try {
+
+        const response = await fetch(url,{
+            method:"GET",
+            headers:{'Content-Type':'application/json'}
+        })
+
+        if(!response.ok){
+            const errorData = await response.json();
+            throw new Error(`Error al crear usuario: ${errorData.message}`);
+        }
+
+        const users=await response.json()
+        return users;
+
+    } catch (error) {
+        console.log(error)
+        throw error;
+    }
+}
+
+//Servicio para crear un usuario
+//Aclaracion: en el front usamos "age" como string por problemas con zod, antes de mandar la data al back lo transformamos en numero
+export const createUser = async (data:FormValues):Promise<{message:string}>=>{
+
+    const url = "http://localhost:3000/api/users/addUser"
+
+    //Validamos que "age" sea un numero
+    if (isNaN(Number(data.age))) {
+        throw new Error("La edad debe ser un número válido");
+    }
+
+    const res= {
+            email:data.email,
+            name:data.name,
+            lastName:data.lastName,
+            dni:data.dni,
+            age:Number(data.age),//Transformamos
+            number:data.number,
+            address:data.address
+        }
+
+    try {
+
+        const response = await fetch(url,{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(res)
+        })
+        //Capturamos el error del backend y lo mostramos
+        if(!response.ok){
+            const errorData = await response.json();
+            throw new Error(`Error al crear usuario: ${errorData.message}`);
+        }
+        
+        const message=await response.json()
+        return message;
+
+    } catch (error) {
+        console.log(error)
+        throw error;
     }
 }
 
@@ -104,7 +132,6 @@ export const deleteUser = async (id:number):Promise<{message:string}>=>{
 
 //Servicio para editar el usuario
 //Aclaracion: en el front usamos "age" como string por problemas con zod, antes de mandar la data al back lo transformamos en numero
-
 export const updateUser = async (user:FormValues,id:number):Promise<{message:string}>=>{
     
     const url = `http://localhost:3000/api/users/updateUser/${id}`
@@ -134,7 +161,7 @@ export const updateUser = async (user:FormValues,id:number):Promise<{message:str
 
         if(!response.ok){
             const failed=await response.json()
-            throw new Error(`${failed.message}`)
+            throw new Error(`Error al editar usuario: ${failed.message}`)
         }
 
         const message=await response.json();

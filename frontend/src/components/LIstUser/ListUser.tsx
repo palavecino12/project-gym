@@ -8,16 +8,16 @@ import {type User} from "../../services/userServices"
 import "./listUser.css"
 
 interface props{
-    refresh:boolean
-    handleRefresh:()=>void//Se pasa a CardUser
+    refreshValue:boolean
+    refresh:()=>void//Se pasa a CardUser
     userUpdate:React.Dispatch<React.SetStateAction<User|null>>//Se pasa a CardUser
     showForm:()=>void//Se pasa al CardUser
 
 }
 
-const ListUser = ({refresh,handleRefresh,userUpdate,showForm}:props)=>{ 
+const ListUser = ({refreshValue,refresh,userUpdate,showForm}:props)=>{ 
 
-    const {users,loading,error}=useGetUsers(refresh)
+    const {users,loading,error}=useGetUsers(refreshValue)
 
     if(loading){
         return(
@@ -31,7 +31,7 @@ const ListUser = ({refresh,handleRefresh,userUpdate,showForm}:props)=>{
     }
     if(users && users.length>0){
         return(
-        users.map(user=><CardUser  key={user.id} user={user} handleRefresh={handleRefresh} userUpdate={userUpdate} showForm={showForm}/>)
+        users.map(user=><CardUser  key={user.id} user={user} handleRefresh={refresh} userUpdate={userUpdate} showForm={showForm}/>)
         )
     }
 

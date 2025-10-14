@@ -6,12 +6,12 @@ import { FormUser } from "../FormUser/FormUser"
 //Componente especifico para crear un usuario usando el formulario reutilizable
 interface props{
     closeForm:()=>void
-    handleRefresh:()=>void
+    refresh:()=>void
     user:User|null
     
 }
 
-export const FormUserUpdate=({closeForm,handleRefresh,user}:props)=>{
+export const FormUserUpdate=({closeForm,refresh,user}:props)=>{
     const{message,error,loading,userUpdate}=useUpdateUser()
 
     const handleUpdate=async(data:FormValues)=>{
@@ -21,7 +21,7 @@ export const FormUserUpdate=({closeForm,handleRefresh,user}:props)=>{
             //En caso de error no cerramos el formulario
             if(success){
                 closeForm()
-                handleRefresh()
+                refresh()
             }
         }
     }

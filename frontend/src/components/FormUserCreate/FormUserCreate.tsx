@@ -5,10 +5,10 @@ import { useCreateUser } from "../../hooks/useCreateUser"
 
 interface props{
     closeForm:()=>void
-    handleRefresh:()=>void
+    refresh:()=>void
 }
 
-export const FormUserCreate=({closeForm,handleRefresh}:props)=>{
+export const FormUserCreate=({closeForm,refresh}:props)=>{
     const {message,error,loading,userCreate}= useCreateUser()
 
     
@@ -19,7 +19,7 @@ export const FormUserCreate=({closeForm,handleRefresh}:props)=>{
         //En caso de error que no cierre el form asi se puede ver el mensaje de error
         if(success){
             closeForm()
-            handleRefresh()
+            refresh()
         }
     }
     //Luego de que se ejecute handleCreate se produce un re-render y "error" toma el nuevo valor

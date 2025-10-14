@@ -5,7 +5,8 @@ import { FormUserCreate } from './FormUserCreate/FormUserCreate';
 import { FormUserUpdate } from './FormUserUpdate/FormUserUpdate';
 import ButtonForm from './FormUser/ButtonFormUser'
 import ListUser from './LIstUser/ListUser';
-import type { User } from '../services/userServices';
+import { SearchUser } from './SearchUser/SearchUser';
+import { type User } from '../services/userServices';
 
 const UserSection = () =>{
     //Estado para que se refresque la lista de usuarios
@@ -29,10 +30,11 @@ const UserSection = () =>{
 
     return(
         <>
-        {showCreateForm && <FormUserCreate closeForm={toggleCreateForm} handleRefresh={toggleRefresh}/>}
-        {showUpdateForm && <FormUserUpdate closeForm={toggleUpdateForm} handleRefresh={toggleRefresh} user={userUpdate}/>}
+        <SearchUser/>
+        {showCreateForm && <FormUserCreate closeForm={toggleCreateForm} refresh={toggleRefresh}/>}
+        {showUpdateForm && <FormUserUpdate closeForm={toggleUpdateForm} refresh={toggleRefresh} user={userUpdate}/>}
         {!showCreateForm&&!showUpdateForm && <ButtonForm onClick={toggleCreateForm}/>}
-        {!showCreateForm&&!showUpdateForm && <ListUser handleRefresh={toggleRefresh} refresh={refreshList} userUpdate={setUserUpdate} showForm={toggleUpdateForm}/>}
+        {!showCreateForm&&!showUpdateForm && <ListUser refresh={toggleRefresh} refreshValue={refreshList} userUpdate={setUserUpdate} showForm={toggleUpdateForm}/>}
         </>
     )
 }
