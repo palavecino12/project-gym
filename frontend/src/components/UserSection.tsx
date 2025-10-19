@@ -28,13 +28,17 @@ const UserSection = () =>{
     //Estado donde vamos a almacenar los datos del usuario a editar
     const [userUpdate,setUserUpdate]=useState<User|null>(null)
 
+    //Estado donde vamos a almacenar los usuarios que se filtran cuando el cliente escribe algo en el buscador
+    const [userSearch,setUserSearch]=useState("")
+
+
     return(
         <>
-        <SearchUser/>
+        <SearchUser setUserSearch={setUserSearch}/>
         {showCreateForm && <FormUserCreate closeForm={toggleCreateForm} refresh={toggleRefresh}/>}
         {showUpdateForm && <FormUserUpdate closeForm={toggleUpdateForm} refresh={toggleRefresh} user={userUpdate}/>}
         {!showCreateForm&&!showUpdateForm && <ButtonForm onClick={toggleCreateForm}/>}
-        {!showCreateForm&&!showUpdateForm && <ListUser refresh={toggleRefresh} refreshValue={refreshList} userUpdate={setUserUpdate} showForm={toggleUpdateForm}/>}
+        {!showCreateForm&&!showUpdateForm && <ListUser userSearch={userSearch} refresh={toggleRefresh} refreshValue={refreshList} userUpdate={setUserUpdate} showForm={toggleUpdateForm}/>}
         </>
     )
 }

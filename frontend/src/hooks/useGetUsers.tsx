@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import {type User} from "../services/userServices"
-import { getUsers } from "../services/userServices"
+import {searchUser, type User} from "../services/userServices"
 
 type Data=User[] | null
 type ErrorType=Error | null
@@ -12,7 +11,7 @@ interface props{
 }
 
 //Hook para traer a todos los usuarios
-export const useGetUsers=(refresh:boolean):props=>{
+export const useGetUsers=(refresh:boolean,userSearch:string):props=>{
 
     const [users,setUsers]=useState<Data>(null)
     const [error,setError]=useState<ErrorType>(null)
@@ -23,7 +22,7 @@ export const useGetUsers=(refresh:boolean):props=>{
         const fetchUser=async()=>{
             try {
                 setLoading(true)
-                const data=await getUsers()
+                const data=await searchUser(userSearch)
                 setUsers(data)
                 setError(null)
             } catch (error) {
@@ -40,7 +39,7 @@ export const useGetUsers=(refresh:boolean):props=>{
         }
         fetchUser()
 
-    },[refresh])//Este refresh va a cambiar su valor cada vez que un usuario modifique la lista, de esta forma se actualiza el listado para mostrar los cambios
+    },[refresh,userSearch])//Este refresh va a cambiar su valor cada vez que un usuario modifique la lista, de esta forma se actualiza el listado para mostrar los cambios
 
     return {users,error,loading}
 }

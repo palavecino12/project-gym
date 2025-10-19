@@ -9,18 +9,18 @@ const prisma = new PrismaClient();
 export const getUsers= async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
     try {
         const users = await prisma.user.findMany();
-        res.send(users);
+        res.status(200).send(users);
 
     } catch (error) {
         next(error)
     }
 }
 
-//Funcion para obtener un usuario por nombre
+//Funcion para obtener todos los usuarios u obtener filtrado por nombre y/o apellido
 export const getUserByName= async (req:Request,res:Response,next:NextFunction):Promise<void>=>{
     try {
         //Busqueda flexible de usuario por nombre y/o apellido, o al reves.
-        const fullName = (req.query.name as string) || "";
+        const fullName = (req.query.fullName as string) || "";
         const words = fullName.split(" ").filter(Boolean);//Almacenamos nombre y apellido como array
 
         //Buscamos el nombre tanto en la lista de nombres como en la de apellidos, de la misma forma con el apellido
@@ -39,6 +39,7 @@ export const getUserByName= async (req:Request,res:Response,next:NextFunction):P
             whereClause = {};
         }
 
+        //Realizamos la busqueda correspondiente
         const users = await prisma.user.findMany({
             where: whereClause
         });
@@ -46,7 +47,7 @@ export const getUserByName= async (req:Request,res:Response,next:NextFunction):P
         if(!users.length){
             throw new errorUserNotFound('Usuario no encontrado');
         }
-        res.send(users);
+        res.status(200).send(users);
 
     } catch (error) {
         next(error)

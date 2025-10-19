@@ -8,6 +8,7 @@ import {type User} from "../../services/userServices"
 import "./listUser.css"
 
 interface props{
+    userSearch:string
     refreshValue:boolean
     refresh:()=>void//Se pasa a CardUser
     userUpdate:React.Dispatch<React.SetStateAction<User|null>>//Se pasa a CardUser
@@ -15,9 +16,9 @@ interface props{
 
 }
 
-const ListUser = ({refreshValue,refresh,userUpdate,showForm}:props)=>{ 
+const ListUser = ({userSearch,refreshValue,refresh,userUpdate,showForm}:props)=>{ 
 
-    const {users,loading,error}=useGetUsers(refreshValue)
+    const {users,loading,error}=useGetUsers(refreshValue,userSearch)
 
     if(loading){
         return(
