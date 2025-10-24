@@ -4,7 +4,6 @@ import { useForm, type SubmitHandler } from "react-hook-form"
 import { type FormValues,schema } from "../../schemas/schemaForm"
 import { zodResolver } from "@hookform/resolvers/zod"
 import InputForm from "./InputFormUser"
-import "./formUser.css"
 
 interface props{
     title:string
@@ -36,7 +35,8 @@ export const FormUser=({title,initialValues,buttonText,onSubmit,closeForm}:props
     }
 
         return (
-        <form onSubmit={handleSubmit(handleFormSubmit)} className='form-container'>
+        <form onSubmit={handleSubmit(handleFormSubmit)} className='w-200 rounded-4xl border border-gray-300 bg-white py-1 text-gray-700 
+            flex flex-col items-center'>
             {<h1>{title}</h1>}
             <InputForm name='name' label='Name' control={control} type='text' error={errors.name} />
             <InputForm name='lastName' label='Last Name' control={control} type='text' error={errors.lastName} />
@@ -46,8 +46,14 @@ export const FormUser=({title,initialValues,buttonText,onSubmit,closeForm}:props
             <InputForm name='number' label='Number Phone' control={control} type='text' error={errors.number} />
             <InputForm name='address' label='Address' control={control} type='text' error={errors.address} />
 
-            <button className='btn submit' type="submit">{buttonText}</button>
-            <button className='btn cancel' type="button" onClick={closeForm}>Cancelar</button>
+            <button className="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-xl shadow-md
+                hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300 
+                active:scale-95 dark:bg-blue-500 dark:hover:bg-blue-600" 
+                type="submit">{buttonText}</button>
+            <button className="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-xl shadow-md
+                hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300 
+                active:scale-95 dark:bg-blue-500 dark:hover:bg-blue-600" 
+                type="button" onClick={closeForm}>Cancelar</button>
             {errors.root && <p className='message-error'>{errors.root.message}</p> }
         </form>
     )

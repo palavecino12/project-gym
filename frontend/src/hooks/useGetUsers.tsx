@@ -10,7 +10,7 @@ interface props{
     error:ErrorType
 }
 
-//Hook para traer a todos los usuarios
+//Hook para traer a todos los usuarios y tambien para filtrar usuarios segun lo que busque el cliente
 export const useGetUsers=(refresh:boolean,userSearch:string):props=>{
 
     const [users,setUsers]=useState<Data>(null)

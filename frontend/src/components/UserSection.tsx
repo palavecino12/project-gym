@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { FormUserCreate } from './FormUserCreate/FormUserCreate';
 import { FormUserUpdate } from './FormUserUpdate/FormUserUpdate';
+import { Header } from './Header/Header';
 import ButtonForm from './FormUser/ButtonFormUser'
 import ListUser from './LIstUser/ListUser';
 import { SearchUser } from './SearchUser/SearchUser';
@@ -34,11 +35,13 @@ const UserSection = () =>{
 
     return(
         <>
+        <Header/>
         <SearchUser setUserSearch={setUserSearch}/>
         {showCreateForm && <FormUserCreate closeForm={toggleCreateForm} refresh={toggleRefresh}/>}
         {showUpdateForm && <FormUserUpdate closeForm={toggleUpdateForm} refresh={toggleRefresh} user={userUpdate}/>}
-        {!showCreateForm&&!showUpdateForm && <ButtonForm onClick={toggleCreateForm}/>}
-        {!showCreateForm&&!showUpdateForm && <ListUser userSearch={userSearch} refresh={toggleRefresh} refreshValue={refreshList} userUpdate={setUserUpdate} showForm={toggleUpdateForm}/>}
+        {!showCreateForm&&!showUpdateForm && <ButtonForm text='Añadir' onClick={toggleCreateForm}/>}
+        {!showCreateForm&&!showUpdateForm && <ListUser userSearch={userSearch} refresh={toggleRefresh} refreshValue={refreshList} 
+        userUpdate={setUserUpdate} showForm={toggleUpdateForm}/>}
         </>
     )
 }
