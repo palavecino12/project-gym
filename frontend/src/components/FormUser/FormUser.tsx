@@ -35,9 +35,11 @@ export const FormUser=({title,initialValues,buttonText,onSubmit,closeForm}:props
     }
 
         return (
-        <form onSubmit={handleSubmit(handleFormSubmit)} className='w-200 rounded-4xl border border-gray-300 bg-white py-1 text-gray-700 
-            flex flex-col items-center'>
-            {<h1>{title}</h1>}
+        <form onSubmit={handleSubmit(handleFormSubmit)} className='w-200 bg-white py-1 
+            flex flex-col items-center gap-5'>
+
+            <h1>{title}</h1>
+
             <InputForm name='name' label='Name' control={control} type='text' error={errors.name} />
             <InputForm name='lastName' label='Last Name' control={control} type='text' error={errors.lastName} />
             <InputForm name='email' label='Email' control={control} type='email' error={errors.email} />
@@ -46,14 +48,17 @@ export const FormUser=({title,initialValues,buttonText,onSubmit,closeForm}:props
             <InputForm name='number' label='Number Phone' control={control} type='text' error={errors.number} />
             <InputForm name='address' label='Address' control={control} type='text' error={errors.address} />
 
-            <button className="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-xl shadow-md
+            <div className="flex flex-row-reverse gap-30">
+            <button className="bg-blue-600 w-28 h-11 text-white font-semibold rounded-xl shadow-md
                 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300 
-                active:scale-95 dark:bg-blue-500 dark:hover:bg-blue-600" 
+                active:scale-95 dark:bg-blue-500 dark:hover:bg-blue-600 cursor-pointer" 
                 type="submit">{buttonText}</button>
-            <button className="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-xl shadow-md
+            <button className="bg-blue-600 w-28 h-11 text-white font-semibold rounded-xl shadow-md
                 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300 
-                active:scale-95 dark:bg-blue-500 dark:hover:bg-blue-600" 
+                active:scale-95 dark:bg-blue-500 dark:hover:bg-blue-600 cursor-pointer" 
                 type="button" onClick={closeForm}>Cancelar</button>
+            </div>
+
             {errors.root && <p className='message-error'>{errors.root.message}</p> }
         </form>
     )
