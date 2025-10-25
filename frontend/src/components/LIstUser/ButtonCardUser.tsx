@@ -1,15 +1,16 @@
 interface props{
     onClick:()=>void;
-    text:string
+    children:React.ReactNode
 }
 
 
-export const ButtonCardUser = ({onClick,text}:props)=>{
+export const ButtonCardUser = ({onClick,children}:props)=>{
     return (
         <button 
-        className="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-xl shadow-md
-        hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300 
-        active:scale-95 dark:bg-blue-500 dark:hover:bg-blue-600 cursor-pointer"
-        onClick={onClick}>{text}</button>
+        className="p-2 rounded-2xl bg-white hover:drop-shadow-lg hover:-translate-y-1 hover:outline-1 outline-black/20 transition-all duration-200
+        active:bg-gray-200 active:shadow-inner cursor-pointer"
+        onClick={onClick}>
+        {children}
+        </button>
     )
 }

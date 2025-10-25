@@ -31,7 +31,7 @@ const ListUser = ({userSearch,refreshValue,refresh,userUpdate,showForm}:props)=>
     }
     if(users && users.length>0){
         return(
-            <div className="w-4xl h-160 overflow-auto border border-gray-300 p-9 m-auto flex flex-col gap-2">
+            <div className="w-4xl h-160  p-9 m-auto flex flex-col gap-4 overflow-auto">
                 {users.map(user=><CardUser key={user.id} user={user} handleRefresh={refresh} userUpdate={userUpdate} showForm={showForm}/>)}
             </div>
         )

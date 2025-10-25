@@ -1,19 +1,18 @@
 //Este va a ser el boton donde presionamos para mostrar el formulario
 //Aqui tengo que recibir una funcion por props (del padre que es usersection) 
 //esa funcion va a ser el encargado de cambiar el estado del formulario
+import { UserRoundPlus } from "lucide-react"
 
 interface props{
     onClick:()=>void;
-    text:string;
 }
 
-const ButtonForm =({onClick,text}:props)=>{
+const ButtonForm =({onClick}:props)=>{
     return (
         <button 
-        className="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-full shadow-md
-        hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300 
-        active:scale-95 dark:bg-blue-500 dark:hover:bg-blue-600 cursor-pointer"
-        onClick={onClick}>{text}</button>
+        className="p-4 m-5 bg-white rounded-full shadow-lg hover:outline-1 outline-black/20 hover:-translate-y-1 
+        hover:shadow-2xl transition-all duration-200 cursor-pointer active:bg-gray-200 active:shadow-inner"
+        onClick={onClick}><UserRoundPlus size={35} strokeWidth={2} color="gray"/></button>
     )
 }
 

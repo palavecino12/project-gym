@@ -1,5 +1,6 @@
 //Aca vamos a crear un componente que reciba por props los datos del usuario y cree una tarjeta del usuario
 //Este componente mas adelante tendra los botones para modificar o eliminar el usuario
+import { Pencil, Trash2 } from "lucide-react"
 import { useDeleteUser } from "../../hooks/useDeleteUser"
 import type { User } from "../../services/userServices"
 import { ButtonCardUser } from "./ButtonCardUser"
@@ -16,12 +17,17 @@ const CardUser = ({user,handleRefresh,userUpdate,showForm}:props) =>{
     const {message,loading,error,userDelete} = useDeleteUser({handleRefresh})
 
     return(
-        <div className="w-full rounded-full border border-gray-300 bg-white py-1 text-gray-700 shadow-sm 
-            flex flex-row justify-around items-center">
-            <span className="">{user.name} {user.lastName} - {user.dni}</span>
-            <div className="">
-                <ButtonCardUser onClick={()=>{userDelete(Number(user.id));}} text="Eliminar"/>
-                <ButtonCardUser onClick={()=>{userUpdate(user);showForm()}} text="Editar"/>
+        <div className="w-full py-1.5 rounded-2xl border border-black/20 bg-white text-gray-700 shadow-sm 
+            flex flex-row items-center">
+            <span className="ml-10 text-black">{user.name} {user.lastName} - {user.dni}</span>
+
+            <div className="flex flex-row-reverse gap-8 ml-auto mr-10">
+                <ButtonCardUser onClick={()=>{userDelete(Number(user.id));}}>
+                    <Trash2 color="black"/>
+                </ButtonCardUser>
+                <ButtonCardUser onClick={()=>{userUpdate(user);showForm()}}>
+                    <Pencil color="black"/>
+                </ButtonCardUser>
             </div>
 
             {error && error.message}

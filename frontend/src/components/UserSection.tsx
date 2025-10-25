@@ -34,7 +34,7 @@ const UserSection = () =>{
 
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-300">
+        <div className="min-h-screen flex flex-col bg-gray-200">
             {/* HEADER CON BUSCADOR */}
             {!showCreateForm && !showUpdateForm && 
             <Header>
@@ -63,10 +63,10 @@ const UserSection = () =>{
             {!showCreateForm && !showUpdateForm && (
                 <div className="flex flex-col gap-4">
                     <div className="">
-                        <ButtonForm text="Añadir" onClick={toggleCreateForm} />
+                        <ButtonForm onClick={toggleCreateForm} />
                     </div>
             
-                    <div className="bg-white shadow-md rounded-2xl p-4 overflow-hidden">
+                    <div className="bg-white shadow-md rounded-2xl p-4">
                         <ListUser userSearch={userSearch} refresh={toggleRefresh} refreshValue={refreshList} userUpdate={setUserUpdate} showForm={toggleUpdateForm}/>
                     </div>
                 </div>

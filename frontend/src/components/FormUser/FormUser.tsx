@@ -49,13 +49,11 @@ export const FormUser=({title,initialValues,buttonText,onSubmit,closeForm}:props
             <InputForm name='address' label='Address' control={control} type='text' error={errors.address} />
 
             <div className="flex flex-row-reverse gap-30">
-            <button className="bg-blue-600 w-28 h-11 text-white font-semibold rounded-xl shadow-md
-                hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300 
-                active:scale-95 dark:bg-blue-500 dark:hover:bg-blue-600 cursor-pointer" 
+            <button className="bg-gray-900/20 w-28 h-11 text-black/70 rounded-xl shadow-lg transition-all duration-200 cursor-pointer
+                    hover:shadow-2xl hover:-translate-y-1 active:bg-gray-200 active:shadow-inner" 
                 type="submit">{buttonText}</button>
-            <button className="bg-blue-600 w-28 h-11 text-white font-semibold rounded-xl shadow-md
-                hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition-all duration-300 
-                active:scale-95 dark:bg-blue-500 dark:hover:bg-blue-600 cursor-pointer" 
+            <button className="bg-white border border-black/20 w-28 h-11 text-black rounded-xl shadow-lg transition-all duration-200 cursor-pointer
+                    hover:shadow-2xl hover:-translate-y-1 active:bg-gray-200 active:shadow-inner" 
                 type="button" onClick={closeForm}>Cancelar</button>
             </div>
 
